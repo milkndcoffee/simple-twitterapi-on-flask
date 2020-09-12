@@ -52,7 +52,14 @@ def home():
 
 @app.route('/user/<user>/json')
 def view_json(user):
-  return render_template('json.html', user=api.GetUser(screen_name=user))
+  try:
+    user_json = api.GetUser(screen_name=user, return_json=True)
+    return user_json
+  except Exception as e:
+    error_msg = 'Error requesting json data: %r' % str(e)
+    return error_msg, 400
+    
+  
 
 if __name__ == "__main__":
   app.run(debug=True)
