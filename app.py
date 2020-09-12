@@ -6,17 +6,27 @@
     CONSUMER_KEY_SECRET = 'yyyyyyyyyyyyyyyyyyy'
     .. and so forth
 
+  ------------------------------------------------------------------------
+  To allow requesting information from the json page, install
+  flask-cors and uncomment [*] tagged code or push the code to a new line
+
+    example:
+    #[*] from flask_cors import CORS
+    'make sure to remove [*] comment if uncommenting so it looks like:'
+    flask_cors import CORS
 '''
 
 from flask import Flask, render_template, url_for, request, redirect
 from twitter_keys import CONSUMER_KEY, CONSUMER_KEY_SECRET, ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET
 import twitter
+#[*]from flask_cors import CORS
 
 app = Flask(__name__)
 api = twitter.Api(consumer_key=CONSUMER_KEY,
                   consumer_secret=CONSUMER_KEY_SECRET,
                   access_token_key=ACCESS_TOKEN_KEY,
                   access_token_secret=ACCESS_TOKEN_SECRET)
+#[*]CORS(app)
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
