@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>simple-twitter-api</title>
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+  <header class="header">
+    <h1>simple-twitterapi-on-flask</h1>
+  </header>
+
+  {% if user %}
+  <section class="user-container">
+    <p>Viewing @{{user.screen_name}}</p>
+    <p>Ctrl + A -> Ctrl + C</p>
+    <textarea id="textarea" style="height: 70vh;">{{user}}</textarea>
+  </section>
+  <div class="bottom-links">
+    <a href='/user/{{user.screen_name}}'>Go Back</a>
+    <a href='/home'>Clear Data</a>
+  </div>
+  {% endif %}
+
+  <hr />
+  <footer class="footer">
+    <p>Made with luv</p>
+    <a href="">milkndcoffee</a>
+  </footer>
+</div>
+{% endblock %}

@@ -1,5 +1,5 @@
 '''
-  Requires a twitter_keys.py file in the root for necessary imported variables like keys.
+  Requires a created twitter_keys.py file in the root for necessary imported variables like keys.
 
     [twitter_keys.py] should look like:
     CONSUMER_KEY = 'xxxxxxxxxxxxxxxxxxx'
@@ -18,29 +18,21 @@ api = twitter.Api(consumer_key=CONSUMER_KEY,
                   access_token_key=ACCESS_TOKEN_KEY,
                   access_token_secret=ACCESS_TOKEN_SECRET)
 
-
 @app.route('/', methods=['POST', 'GET'])
 def index():
   if request.method == 'POST':
     search_user = request.form['user']
     try:
       print('search: ', search_user)
-      return redirect(search_user)
+      return redirect('user/'+search_user)
     except:
       return 'There was an issue with requesting the data'
 
   else:
-    print('printing in index() else:')
-    screenName = 'milkndcoffee'
-    #bruh = api.VerifyCredentials()
-    #bruh = api.GetUser(screen_name=screenName)
- 
-    #print(bruh)
-    message = 'searched: '
-    return render_template('index.html')
+    return render_template('index.html', user='')
     
-@app.route('/<user>', methods=['POST', 'GET'])
-def get(user):
+@app.route('/user/<user>', methods=['POST', 'GET'])
+def view_user(user):
   if request.method == 'POST':
     search_user = request.form['user']
     try:
@@ -48,11 +40,19 @@ def get(user):
       return redirect(search_user)
     except:
       return 'There was an issue with requesting the data'
+  
+  try:
+    return render_template('index.html', user=api.GetUser(screen_name=user))
+  except:
+    return 'There was an error getting data. The user might be private, banned, or may not exist.'
 
-  print('getting user')
-  return render_template('index.html', message=str(user))
+@app.route('/home')
+def home():
+  return redirect('/')
 
-
+@app.route('/user/<user>/json')
+def view_json(user):
+  return render_template('json.html', user=api.GetUser(screen_name=user))
 
 if __name__ == "__main__":
   app.run(debug=True)

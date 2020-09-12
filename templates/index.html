@@ -10,22 +10,41 @@
   <header class="header">
     <h1>simple-twitterapi-on-flask</h1>
   </header>
-  
+
   <div class="search-container">
     <p>Search for a user to display their information.</p>
     <div class="search-bar">
       <form method="POST">
         <label>@</label>
-        <input type="text" name="user" id="user" />
+        <input type="text" name="user" id="user" value="{% if user.screen_name %}{{user.screen_name}}{% endif %}"/>
         <input type="submit" value="Submit" />
       </form>
     </div>
     <p>{{message}}</p>
   </div>
-  
-  <section>
-    <h2>No search committed.</h2>
+
+  {% if user %}
+  <section class="user-container">
+    <div style="display: inline-flex; ">
+    <h2>@{{user.screen_name}}</h2>
+    <img alt="profile-pic" src="{{user.profile_image_url_https}}"/>
+    </div>
+    <hr />
+    <p>Name: {{user.name}}</p>
+    <p>Description: {{user.description}}</p>
+    <p>Profile Created at: {{user.created_at}}</p>
   </section>
+  <div class="bottom-links">
+    <a href='/user/{{user.screen_name}}/json'>Grab json</a>
+    <a href='/home'>Clear Data</a>
+  </div>
+  {% else %}
+  <section class="user-container">
+    <p>A simple flask app that utilizes <a href="https://github.com/bear/python-twitter">python-twitter</a> to GET data from the <a href="https://developer.twitter.com/en">Twitter API</a>.</p>
+    <p>As of now, this program only displays a small amount of information of a profile. </p>
+    <p>You should still be able to checkout the rest of information by clicking on 'Grab json' upon a succesful search of an account.</p>
+  </section>
+  {% endif %}
 
   <hr />
   <footer class="footer">
