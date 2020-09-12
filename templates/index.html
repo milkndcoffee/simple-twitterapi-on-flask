@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>simple-twitter-api</title>
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+  <header class="header">
+    <h1>simple-twitterapi-on-flask</h1>
+  </header>
+  
+  <div class="search-container">
+    <p>Search for a user to display their information.</p>
+    <div class="search-bar">
+      <form method="POST">
+        <label>@</label>
+        <input type="text" name="user" id="user" />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+    <p>{{message}}</p>
+  </div>
+  
+  <section>
+    <h2>No search committed.</h2>
+  </section>
+
+  <hr />
+  <footer class="footer">
+    <p>Made with luv</p>
+    <a href="">milkndcoffee</a>
+  </footer>
+</div>
+{% endblock %}
